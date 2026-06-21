@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFT Lab Educativo</title>
+
+  <style>
+    :root {
+      --azul: #0d47a1;
+      --roxo: #6a1b9a;
+      --laranja: #f57c00;
+      --verde: #2e7d32;
+      --vermelho: #c62828;
+      --fundo: #f4f6f8;
+      --texto: #222;
+      --branco: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--fundo);
+      color: var(--texto);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--azul), var(--roxo));
+      color: white;
+      padding: 32px 16px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 38px;
+    }
+
+    header p {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: 18px auto;
+      padding: 0 16px;
+      text-align: center;
+    }
+
+    nav a {
+      display: inline-block;
+      background: white;
+      color: var(--azul);
+      padding: 10px 16px;
+      margin: 5px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+
+    main {
+      max-width: 1150px;
+      margin: 0 auto 32px auto;
+      padding: 0 16px;
+    }
+
+    .aviso {
+      background: #fff8e1;
+      border-left: 8px solid #f9a825;
+      padding: 16px;
+      border-radius: 14px;
+      margin-bottom: 22px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 22px;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 18px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: var(--azul);
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      margin-top: 6px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #bbb;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    input[type="color"] {
+      height: 48px;
+      padding: 4px;
+    }
+
+    .duas-colunas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    button {
+      margin-top: 14px;
+      padding: 13px 18px;
+      border: none;
+      border-radius: 999px;
+      background: var(--verde);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    button:hover {
+      filter: brightness(0.9);
+    }
+
+    .btn-azul {
+      background: var(--azul);
+    }
+
+    .btn-roxo {
+      background: var(--roxo);
+    }
+
+    .btn-laranja {
+      background: var(--laranja);
+    }
+
+    .botoes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .botoes button {
+      flex: 1 1 170px;
+    }
+
+    canvas {
+      width: 100%;
+      max-width: 520px;
+      border: 4px solid #222;
+      border-radius: 18px;
+      background: white;
+      display: block;
+      margin: 0 auto;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+    }
+
+    .erro {
+      display: none;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #ffebee;
+      border-left: 8px solid var(--vermelho);
+      color: #8b0000;
+    }
+
+    .resultado {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      background: #e8f5e9;
+      border-left: 8px solid var(--verde);
+    }
+
+    .token {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--roxo);
+      word-break: break-word;
+    }
+
+    .hash {
+      font-family: monospace;
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 8px;
+      word-break: break-all;
+      font-size: 14px;
+    }
+
+    pre {
+      background: #f7f7f7;
+      padding: 12px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 13px;
+      max-height: 260px;
+    }
+
+    .explicacao {
+      margin-top: 22px;
+      background: #eaf3ff;
+      border-left: 8px solid var(--azul);
+      padding: 18px;
+      border-radius: 14px;
+    }
+
+    .conceitos {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .conceito {
+      background: white;
+      padding: 14px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+    }
+
+    .conceito strong {
+      display: block;
+      color: var(--roxo);
+      margin-bottom: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    #certificado {
+      display: none;
+    }
+
+    @media print {
+      body > *:not(#certificado) {
+        display: none !important;
+      }
+
+      #certificado {
+        display: block !important;
+        padding: 30px;
+      }
+
+      .folha-certificado {
+        border: 8px solid var(--azul);
+        border-radius: 22px;
+        padding: 32px;
+        text-align: center;
+        font-family: Arial, sans-serif;
+      }
+
+      .folha-certificado img {
+        max-width: 360px;
+        border: 4px solid #222;
+        border-radius: 18px;
+      }
+    }
+
+    @media (max-width: 850px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .conceitos {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .duas-colunas {
+        grid-template-columns: 1fr;
+      }
+
+      .conceitos {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>NFT Lab Educativo</h1>
+  <p>Crie uma obra digital e gere uma NFT didática simulada</p>
+</header>
+
+<nav>
+  <a href="index.html">← Voltar para a calculadora</a>
+  <a href="atividade.html">Atividade Decimal → Binário</a>
+</nav>
+
+<main>
+
+  <section class="aviso">
+    <strong>Atenção:</strong>
+    esta atividade cria uma <strong>NFT didática simulada</strong>.
+    Ela não usa blockchain real, não envolve dinheiro, não cria carteira digital e não vende nada.
+    O objetivo é entender conceitos como arte digital, metadados, hash e identificador único.
+  </section>
+
+  <section class="layout">
+
+    <div class="card">
+      <h2>1. Dados da obra</h2>
+
+      <label for="nomeObra">Nome da obra:</label>
+      <input id="nomeObra" placeholder="Exemplo: Robô Cósmico">
+
+      <label for="codigoAluno">Código do aluno, com 6 dígitos binários:</label>
+      <input id="codigoAluno" maxlength="6" placeholder="Exemplo: 001101">
+
+      <div class="duas-colunas">
+        <div>
+          <label for="turma">Turma:</label>
+          <select id="turma">
+            <option>9º ano A</option>
+            <option>9º ano B</option>
+            <option>9º ano C</option>
+            <option>9º ano</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="tema">Tema visual:</label>
+          <select id="tema">
+            <option value="pixel">Pixel Art</option>
+            <option value="robo">Robô</option>
+            <option value="planeta">Planeta</option>
+            <option value="circuito">Circuito Digital</option>
+            <option value="abstrato">Abstrato</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="duas-colunas">
+        <div>
+          <label for="corPrincipal">Cor principal:</label>
+          <input id="corPrincipal" type="color" value="#0d47a1">
+        </div>
+
+        <div>
+          <label for="corSecundaria">Cor secundária:</label>
+          <input id="corSecundaria" type="color" value="#f57c00">
+        </div>
+      </div>
+
+      <label for="descricao">Descrição da obra:</label>
+      <textarea id="descricao" placeholder="Explique a ideia da sua obra digital."></textarea>
+
+      <div id="mensagemErro" class="erro"></div>
+
+      <div class="botoes">
+        <button class="btn-azul" onclick="gerarArte()">Gerar arte</button>
+        <button class="btn-roxo" onclick="gerarNFT()">Gerar NFT didática</button>
+      </div>
+
+      <div class="botoes">
+        <button class="btn-laranja" onclick="baixarImagem()">Baixar imagem</button>
+        <button class="btn-laranja" onclick="baixarMetadados()">Baixar metadados</button>
+        <button class="btn-laranja" onclick="imprimirCertificado()">Imprimir certificado</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2. Obra gerada</h2>
+
+      <canvas id="arteCanvas" width="800" height="800"></canvas>
+
+      <div id="resultadoNFT" class="resultado">
+        <p><strong>Token ID:</strong></p>
+        <p id="tokenId" class="token"></p>
+
+        <p><strong>Hash SHA-256:</strong></p>
+        <p id="hashValor" class="hash"></p>
+
+        <p><strong>Metadados:</strong></p>
+        <pre id="metadadosTexto"></pre>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="explicacao">
+    <h2>O que estamos aprendendo?</h2>
+
+    <p>
+      Uma NFT real é um registro digital único associado a uma obra, item ou informação.
+      Nesta atividade, vamos simular esse processo de forma segura e educativa.
+    </p>
+
+    <div class="conceitos">
+      <div class="conceito">
+        <strong>Arte digital</strong>
+        É a imagem criada pelo aluno.
+      </div>
+
+      <div class="conceito">
+        <strong>Metadados</strong>
+        São informações como nome, criador, turma, tema e data.
+      </div>
+
+      <div class="conceito">
+        <strong>Hash</strong>
+        É uma impressão digital dos dados. Se algo muda, o hash muda.
+      </div>
+
+      <div class="conceito">
+        <strong>Token ID</strong>
+        É um código único que identifica a NFT didática.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<section id="certificado"></section>
+
+<footer>
+  Projeto educativo — NFT Lab sem blockchain real, sem carteira digital e sem transações financeiras.
+</footer>
+
+<script>
+  const canvas = document.getElementById("arteCanvas");
+  const ctx = canvas.getContext("2d");
+
+  let arteCriada = false;
+  let nftAtual = null;
+
+  function mostrarErro(mensagem) {
+    const erro = document.getElementById("mensagemErro");
+    erro.textContent = mensagem;
+    erro.style.display = "block";
+  }
+
+  function limparErro() {
+    const erro = document.getElementById("mensagemErro");
+    erro.textContent = "";
+    erro.style.display = "none";
+  }
+
+  function validarCampos() {
+    limparErro();
+
+    const nome = document.getElementById("nomeObra").value.trim();
+    const codigo = document.getElementById("codigoAluno").value.trim();
+
+    if (nome.length < 2) {
+      mostrarErro("Digite um nome para a obra.");
+      return false;
+    }
+
+    if (!/^[01]{6}$/.test(codigo)) {
+      mostrarErro("O código do aluno deve ter exatamente 6 dígitos usando apenas 0 e 1.");
+      return false;
+    }
+
+    return true;
+  }
+
+  function criarSemente(texto) {
+    let h = 2166136261;
+
+    for (let i = 0; i < texto.length; i++) {
+      h ^= texto.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+
+    return h >>> 0;
+  }
+
+  function criarAleatorio(seed) {
+    return function() {
+      seed += 0x6D2B79F5;
+      let t = seed;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function hexParaRgb(hex) {
+    const h = hex.replace("#", "");
+
+    return {
+      r: parseInt(h.substring(0, 2), 16),
+      g: parseInt(h.substring(2, 4), 16),
+      b: parseInt(h.substring(4, 6), 16)
+    };
+  }
+
+  function rgba(rgb, a) {
+    return "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + "," + a + ")";
+  }
+
+  function fundoGradiente(cor1, cor2) {
+    const grad = ctx.createLinearGradient(0, 0, 800, 800);
+    grad.addColorStop(0, cor1);
+    grad.addColorStop(1, cor2);
+
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 800, 800);
+
+    ctx.strokeStyle = "rgba(255,255,255,0.12)";
+    ctx.lineWidth = 2;
+
+    for (let i = 0; i <= 800; i += 80) {
+      ctx.beginPath();
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i, 800);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0, i);
+      ctx.lineTo(800, i);
+      ctx.stroke();
+    }
+  }
+
+  function escreverTitulo(nome, tema) {
+    ctx.fillStyle = "rgba(0,0,0,0.55)";
+    ctx.fillRect(0, 0, 800, 90);
+
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.font = "bold 34px Arial";
+    ctx.fillText(nome.substring(0, 28), 400, 40);
+
+    ctx.font = "18px Arial";
+    ctx.fillText("NFT Lab Educativo • " + tema, 400, 68);
+  }
+
+  function desenharPixel(rng, cor1, cor2, codigo) {
+    const rgb1 = hexParaRgb(cor1);
+    const rgb2 = hexParaRgb(cor2);
+
+    const n = 16;
+    const t = 800 / n;
+
+    for (let y = 0; y < n; y++) {
+      for (let x = 0; x < n; x++) {
+        const usarCor1 = rng() > 0.5;
+        ctx.fillStyle = usarCor1 ? rgba(rgb1, 0.85) : rgba(rgb2, 0.85);
+
+        if (rng() > 0.25) {
+          ctx.fillRect(x * t, y * t, t - 3, t - 3);
+        }
+      }
+    }
+
+    ctx.fillStyle = "rgba(0,0,0,0.55)";
+    ctx.fillRect(180, 340, 440, 120);
+
+    ctx.fillStyle = "white";
+    ctx.font = "bold 64px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(codigo, 400, 420);
+  }
+
+  function desenharRobo(rng, cor1, cor2, codigo) {
+    const rgb1 = hexParaRgb(cor1);
+    const rgb2 = hexParaRgb(cor2);
+
+    ctx.fillStyle = rgba(rgb1, 0.9);
+    ctx.fillRect(240, 200, 320, 230);
+
+    ctx.fillStyle = rgba(rgb2, 0.9);
+    ctx.fillRect(295, 460, 210, 160);
+
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    ctx.arc(330, 305, 35, 0, Math.PI * 2);
+    ctx.arc(470, 305, 35, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "black";
+    ctx.beginPath();
+    ctx.arc(330, 305, 14, 0, Math.PI * 2);
+    ctx.arc(470, 305, 14, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 10;
+    ctx.beginPath();
+    ctx.moveTo(320, 380);
+    ctx.lineTo(480, 380);
+    ctx.stroke();
+
+    ctx.strokeStyle = rgba(rgb2, 1);
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    ctx.moveTo(400, 200);
+    ctx.lineTo(400, 120);
+    ctx.stroke();
+
+    ctx.fillStyle = rgba(rgb2, 1);
+    ctx.beginPath();
+    ctx.arc(400, 100, 25, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "rgba(0,0,0,0.55)";
+    ctx.fillRect(220, 665, 360, 70);
+
+    ctx.fillStyle = "white";
+    ctx.font = "bold 38px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("CRIADOR " + codigo, 400, 713);
+  }
+
+  function desenharPlaneta(rng, cor1, cor2, codigo) {
+    const rgb1 = hexParaRgb(cor1);
+    const rgb2 = hexParaRgb(cor2);
+
+    for (let i = 0; i < 120; i++) {
+      ctx.fillStyle = "rgba(255,255,255," + (0.2 + rng() * 0.8) + ")";
+      ctx.beginPath();
+      ctx.arc(rng() * 800, rng() * 800, 1 + rng() * 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.fillStyle = rgba(rgb1, 0.95);
+    ctx.beginPath();
+    ctx.arc(400, 390, 180, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = rgba(rgb2, 0.9);
+    ctx.lineWidth = 28;
+    ctx.beginPath();
+    ctx.ellipse(400, 390, 290, 85, -0.25, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.fillStyle = "rgba(0,0,0,0.55)";
+    ctx.fillRect(250, 660, 300, 70);
+
+    ctx.fillStyle = "white";
+    ctx.font = "bold 42px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(codigo, 400, 707);
+  }
+
+  function desenharCircuito(rng, cor1, cor2, codigo) {
+    const rgb1 = hexParaRgb(cor1);
+    const rgb2 = hexParaRgb(cor2);
+
+    ctx.strokeStyle = rgba(rgb2, 0.9);
+    ctx.lineWidth = 8;
+
+    let x = 100;
+    let y = 120;
+
+    for (let i = 0; i < 22; i++) {
+      const nx = 80 + rng() * 640;
+      const ny = 100 + rng() * 560;
+
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(nx, y);
+      ctx.lineTo(nx, ny);
+      ctx.stroke();
+
+      ctx.fillStyle = rgba(rgb1, 0.95);
+      ctx.beginPath();
+      ctx.arc(nx, ny, 18, 0, Math.PI * 2);
+      ctx.fill();
+
+      x = nx;
+      y = ny;
+    }
+
+    ctx.fillStyle = "rgba(0,0,0,0.55)";
+    ctx.fillRect(170, 335, 460, 120);
+
+    ctx.fillStyle = "white";
+    ctx.font = "bold 60px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(codigo, 400, 415);
+  }
+
+  function desenharAbstrato(rng, cor1, cor2, codigo) {
+    const rgb1 = hexParaRgb(cor1);
+    const rgb2 = hexParaRgb(cor2);
+
+    for (let i = 0; i < 34; i++) {
+      ctx.fillStyle = rng() > 0.5 ? rgba(rgb1, 0.55) : rgba(rgb2, 0.55);
+      ctx.beginPath();
+      ctx.arc(rng() * 800, rng() * 800, 30 + rng() * 110, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.fillStyle = "rgba(0,0,0,0.50)";
+    ctx.fillRect(230, 350, 340, 95);
+
+    ctx.fillStyle = "white";
+    ctx.font = "bold 54px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(codigo, 400, 415);
+  }
+
+  function gerarArte() {
+    if (!validarCampos()) return;
+
+    const nome = document.getElementById("nomeObra").value.trim();
+    const codigo = document.getElementById("codigoAluno").value.trim();
+    const turma = document.getElementById("turma").value;
+    const tema = document.getElementById("tema").value;
+    const cor1 = document.getElementById("corPrincipal").value;
+    const cor2 = document.getElementById("corSecundaria").value;
+    const descricao = document.getElementById("descricao").value.trim();
+
+    const textoSemente = nome + codigo + turma + tema + cor1 + cor2 + descricao;
+    const rng = criarAleatorio(criarSemente(textoSemente));
+
+    fundoGradiente(cor1, cor2);
+
+    if (tema === "pixel") {
+      desenharPixel(rng, cor1, cor2, codigo);
+    } else if (tema === "robo") {
+      desenharRobo(rng, cor1, cor2, codigo);
+    } else if (tema === "planeta") {
+      desenharPlaneta(rng, cor1, cor2, codigo);
+    } else if (tema === "circuito") {
+      desenharCircuito(rng, cor1, cor2, codigo);
+    } else {
+      desenharAbstrato(rng, cor1, cor2, codigo);
+    }
+
+    escreverTitulo(nome, tema);
+
+    arteCriada = true;
+    nftAtual = null;
+    document.getElementById("resultadoNFT").style.display = "none";
+  }
+
+  async function sha256(texto) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(texto);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+    return hashArray
+      .map(byte => byte.toString(16).padStart(2, "0"))
+      .join("");
+  }
+
+  async function gerarNFT() {
+    if (!validarCampos()) return;
+
+    if (!arteCriada) {
+      gerarArte();
+    }
+
+    const nome = document.getElementById("nomeObra").value.trim();
+    const codigo = document.getElementById("codigoAluno").value.trim();
+    const turma = document.getElementById("turma").value;
+    const tema = document.getElementById("tema").value;
+    const cor1 = document.getElementById("corPrincipal").value;
+    const cor2 = document.getElementById("corSecundaria").value;
+    const descricao = document.getElementById("descricao").value.trim();
+    const data = new Date().toLocaleString("pt-BR");
+
+    const imagem = canvas.toDataURL("image/png");
+
+    const metadados = {
+      tipo: "NFT didática simulada",
+      nome: nome,
+      descricao: descricao || "Obra criada no NFT Lab Educativo.",
+      criador_codigo_binario: codigo,
+      turma: turma,
+      tema_visual: tema,
+      cor_principal: cor1,
+      cor_secundaria: cor2,
+      data_criacao: data,
+      observacao: "Este registro é uma simulação educativa. Não é uma NFT real em blockchain."
+    };
+
+    const textoParaHash = JSON.stringify(metadados) + imagem;
+    const hash = await sha256(textoParaHash);
+    const tokenId = "NFT-9ANO-" + codigo + "-" + hash.substring(0, 8).toUpperCase();
+
+    nftAtual = {
+      tokenId: tokenId,
+      hash: hash,
+      metadados: metadados,
+      imagem: imagem
+    };
+
+    document.getElementById("tokenId").textContent = tokenId;
+    document.getElementById("hashValor").textContent = hash;
+    document.getElementById("metadadosTexto").textContent = JSON.stringify(metadados, null, 2);
+    document.getElementById("resultadoNFT").style.display = "block";
+  }
+
+  function baixarImagem() {
+    if (!arteCriada) {
+      mostrarErro("Gere a arte antes de baixar a imagem.");
+      return;
+    }
+
+    const link = document.createElement("a");
+    link.download = "nft-didatica.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }
+
+  function baixarMetadados() {
+    if (!nftAtual) {
+      mostrarErro("Gere a NFT didática antes de baixar os metadados.");
+      return;
+    }
+
+    const conteudo = JSON.stringify({
+      token_id: nftAtual.tokenId,
+      hash_sha256: nftAtual.hash,
+      metadados: nftAtual.metadados
+    }, null, 2);
+
+    const blob = new Blob([conteudo], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.download = "metadata-nft-didatica.json";
+    link.href = url;
+    link.click();
+
+    URL.revokeObjectURL(url);
+  }
+
+  function imprimirCertificado() {
+    if (!nftAtual) {
+      mostrarErro("Gere a NFT didática antes de imprimir o certificado.");
+      return;
+    }
+
+    const m = nftAtual.metadados;
+
+    document.getElementById("certificado").innerHTML = `
+      <div class="folha-certificado">
+        <h1>Certificado de NFT Didática</h1>
+        <p>Este certificado registra uma obra digital criada em atividade educativa.</p>
+
+        <img src="${nftAtual.imagem}" alt="Arte gerada">
+
+        <h2>${m.nome}</h2>
+
+        <p><strong>Criador:</strong> ${m.criador_codigo_binario}</p>
+        <p><strong>Turma:</strong> ${m.turma}</p>
+        <p><strong>Tema visual:</strong> ${m.tema_visual}</p>
+        <p><strong>Data de criação:</strong> ${m.data_criacao}</p>
+
+        <p><strong>Token ID:</strong></p>
+        <p>${nftAtual.tokenId}</p>
+
+        <p><strong>Hash SHA-256:</strong></p>
+        <p style="font-family: monospace; word-break: break-all;">${nftAtual.hash}</p>
+
+        <p>
+          Esta é uma NFT didática simulada.
+          Não foi registrada em blockchain real, não possui valor financeiro
+          e não envolve carteira digital.
+        </p>
+      </div>
+    `;
+
+    window.print();
+  }
+
+  function iniciarCanvas() {
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, 800, 800);
+
+    ctx.fillStyle = "#0d47a1";
+    ctx.font = "bold 48px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("NFT Lab Educativo", 400, 360);
+
+    ctx.fillStyle = "#555";
+    ctx.font = "24px Arial";
+    ctx.fillText("Preencha os campos e clique em Gerar arte", 400, 410);
+  }
+
+  iniciarCanvas();
+</script>
+
+</body>
+</html>
