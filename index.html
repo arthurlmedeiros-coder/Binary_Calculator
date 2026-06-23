@@ -176,7 +176,7 @@
     <input id="usuario" maxlength="6" placeholder="Exemplo: 000101">
 
     <label for="senha">Senha:</label>
-    <input id="senha" type="password" placeholder="Digite sua senha">
+    <input id="senha" type="password" placeholder="A senha é igual ao usuário">
 
     <button onclick="fazerLogin()">Entrar</button>
 
@@ -269,13 +269,12 @@ Resultado = S2 S1 S0
     Tabela de usuários.
 
     usuario: deve ter exatamente 6 dígitos com 0 e 1.
-    senha: será gerada automaticamente pela função gerarSenha(usuario).
+    senha: agora é o próprio usuário.
     resultado: número decimal esperado, de 0 a 6.
   */
 
   function gerarSenha(usuario) {
-    const chave = "BIN2026";
-    return btoa(usuario + chave).substring(0, 8);
+    return usuario;
   }
 
   const usuarios = {
@@ -375,7 +374,7 @@ Resultado = S2 S1 S0
     const senhaCorreta = gerarSenha(usuario);
 
     if (senha !== senhaCorreta) {
-      mostrarErro("Senha incorreta.");
+      mostrarErro("Senha incorreta. A senha deve ser igual ao usuário.");
       return;
     }
 
@@ -408,12 +407,7 @@ Resultado = S2 S1 S0
     divErro.style.display = "block";
   }
 
-  /*
-    Esta linha mostra no console do navegador as senhas geradas.
-    Serve para você conferir durante a montagem do projeto.
-    Para abrir o console: F12 → Console.
-  */
-  console.log("Exemplo de senha para 000101:", gerarSenha("000101"));
+  console.log("Agora a senha é igual ao usuário. Exemplo: usuário 000101, senha 000101.");
 </script>
 
 </body>
