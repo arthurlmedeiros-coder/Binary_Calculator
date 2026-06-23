@@ -75,6 +75,7 @@
       font-weight: bold;
       font-size: 18px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+      margin: 6px;
     }
 
     .botao-atividade:hover {
@@ -161,6 +162,10 @@
   <div class="area-botao-atividade">
     <a href="atividade.html" class="botao-atividade">
       Ir para atividade: Decimal → Binário
+    </a>
+
+    <a href="nft.html" class="botao-atividade">
+      Atividade 9º ano: NFT Lab Educativo
     </a>
   </div>
 
@@ -264,86 +269,93 @@ Resultado = S2 S1 S0
     Tabela de usuários.
 
     usuario: deve ter exatamente 6 dígitos com 0 e 1.
-    senha: senha didática, sem segurança real.
-    resultado: número decimal esperado, de 0 a 6 no caso da soma de dois números de 2 bits.
+    senha: será gerada automaticamente pela função gerarSenha(usuario).
+    resultado: número decimal esperado, de 0 a 6.
   */
 
-function gerarSenha(usuario) {
-  const chave = "BIN2026"
-  return btoa(usuario + chave).substring(0, 8);
-}
- 
- const usuarios = {
-  "000001": { resultado: 1 },
-  "000010": { resultado: 2 },
-  "000011": { resultado: 3 },
-  "000100": { resultado: 4 },
-  "000101": { resultado: 3 },
-  "000110": { resultado: 5 },
-  "000111": { resultado: 6 },
-  "001000": { resultado: 2 },
-  "111110": { resultado: 6 },
-  "001100": { resultado: 3 },
-  "101000": { resultado: 2 },
-  "101010": { resultado: 5 },
-  "000000": { resultado: 1 },
-  "111111": { resultado: 4 },
-  "100000": { resultado: 2 },
-  "011111": { resultado: 1 },
-  "001001": { resultado: 3 },
-  "001010": { resultado: 4 },
-  "001011": { resultado: 2 },
-  "001101": { resultado: 5 },
-  "001110": { resultado: 1 },
-  "001111": { resultado: 6 },
-  "010000": { resultado: 4 },
-  "010001": { resultado: 3 },
-  "010010": { resultado: 2 },
-  "010011": { resultado: 5 },
-  "010100": { resultado: 1 },
-  "010101": { resultado: 6 },
-  "010110": { resultado: 3 },
-  "010111": { resultado: 4 },
-  "011000": { resultado: 2 },
-  "011001": { resultado: 5 },
-  "011010": { resultado: 1 },
-  "011011": { resultado: 6 },
-  "011100": { resultado: 3 },
-  "011101": { resultado: 4 },
-  "011110": { resultado: 2 },
-  "100001": { resultado: 5 },
-  "100010": { resultado: 1 },
-  "100011": { resultado: 6 },
-  "100100": { resultado: 1 },
-  "100101": { resultado: 2 },
-  "100110": { resultado: 3 },
-  "100111": { resultado: 4 },
-  "101001": { resultado: 5 },
-  "101011": { resultado: 6 },
-  "101100": { resultado: 1 },
-  "101101": { resultado: 2 },
-  "101110": { resultado: 3 },
-  "101111": { resultado: 4 },
-  "110000": { resultado: 5 },
-  "110001": { resultado: 6 },
-  "110010": { resultado: 1 },
-  "110011": { resultado: 2 },
-  "110100": { resultado: 3 },
-  "110101": { resultado: 4 },
-  "110110": { resultado: 5 },
-  "110111": { resultado: 6 },
-  "111000": { resultado: 1 },
-  "111001": { resultado: 2 },
-  "111010": { resultado: 3 },
-  "111011": { resultado: 4 },
-  "111100": { resultado: 5 },
-  "111101": { resultado: 6 }
-};
+  function gerarSenha(usuario) {
+    const chave = "BIN2026";
+    return btoa(usuario + chave).substring(0, 8);
+  }
+
+  const usuarios = {
+    "000000": { resultado: 1 },
+    "000001": { resultado: 1 },
+    "000010": { resultado: 2 },
+    "000011": { resultado: 3 },
+    "000100": { resultado: 4 },
+    "000101": { resultado: 3 },
+    "000110": { resultado: 5 },
+    "000111": { resultado: 6 },
+
+    "001000": { resultado: 2 },
+    "001001": { resultado: 3 },
+    "001010": { resultado: 4 },
+    "001011": { resultado: 2 },
+    "001100": { resultado: 3 },
+    "001101": { resultado: 5 },
+    "001110": { resultado: 1 },
+    "001111": { resultado: 6 },
+
+    "010000": { resultado: 4 },
+    "010001": { resultado: 3 },
+    "010010": { resultado: 2 },
+    "010011": { resultado: 5 },
+    "010100": { resultado: 1 },
+    "010101": { resultado: 6 },
+    "010110": { resultado: 3 },
+    "010111": { resultado: 4 },
+
+    "011000": { resultado: 2 },
+    "011001": { resultado: 5 },
+    "011010": { resultado: 1 },
+    "011011": { resultado: 6 },
+    "011100": { resultado: 3 },
+    "011101": { resultado: 4 },
+    "011110": { resultado: 2 },
+    "011111": { resultado: 1 },
+
+    "100000": { resultado: 2 },
+    "100001": { resultado: 5 },
+    "100010": { resultado: 1 },
+    "100011": { resultado: 6 },
+    "100100": { resultado: 1 },
+    "100101": { resultado: 2 },
+    "100110": { resultado: 3 },
+    "100111": { resultado: 4 },
+
+    "101000": { resultado: 2 },
+    "101001": { resultado: 5 },
+    "101010": { resultado: 5 },
+    "101011": { resultado: 6 },
+    "101100": { resultado: 1 },
+    "101101": { resultado: 2 },
+    "101110": { resultado: 3 },
+    "101111": { resultado: 4 },
+
+    "110000": { resultado: 5 },
+    "110001": { resultado: 6 },
+    "110010": { resultado: 1 },
+    "110011": { resultado: 2 },
+    "110100": { resultado: 3 },
+    "110101": { resultado: 4 },
+    "110110": { resultado: 5 },
+    "110111": { resultado: 6 },
+
+    "111000": { resultado: 1 },
+    "111001": { resultado: 2 },
+    "111010": { resultado: 3 },
+    "111011": { resultado: 4 },
+    "111100": { resultado: 5 },
+    "111101": { resultado: 6 },
+    "111110": { resultado: 6 },
+    "111111": { resultado: 4 }
+  };
 
   function fazerLogin() {
-    const usuario = document.getElementById("usuario").value.trim()
+    const usuario = document.getElementById("usuario").value.trim();
     const senha = document.getElementById("senha").value.trim();
-   
+
     const divErro = document.getElementById("erro");
     const divResultado = document.getElementById("resultado");
 
@@ -360,7 +372,9 @@ function gerarSenha(usuario) {
       return;
     }
 
-    if (usuarios[usuario].senha !== senha) {
+    const senhaCorreta = gerarSenha(usuario);
+
+    if (senha !== senhaCorreta) {
       mostrarErro("Senha incorreta.");
       return;
     }
@@ -393,6 +407,13 @@ function gerarSenha(usuario) {
     divErro.textContent = mensagem;
     divErro.style.display = "block";
   }
+
+  /*
+    Esta linha mostra no console do navegador as senhas geradas.
+    Serve para você conferir durante a montagem do projeto.
+    Para abrir o console: F12 → Console.
+  */
+  console.log("Exemplo de senha para 000101:", gerarSenha("000101"));
 </script>
 
 </body>
